@@ -1,0 +1,4 @@
+5, 5
+D4 E 3 submarine
+A1 N 3 destroyer
+C2 W 2 scout
