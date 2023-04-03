@@ -1,4 +1,7 @@
 tokens.txt
 valgrind-out.txt
 *.o
-.vscode
+.vscode/
+battleshipsgame
+notes.txt
+battleshipsgame

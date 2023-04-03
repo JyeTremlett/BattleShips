@@ -104,7 +104,7 @@ int processMissileFile(char *missilefilename, linkedlist *missiles, delimiters
 
 	nmissiles = 0;
 	result = SUCCESS;
-	newList(missiles, sizeof(char[8])); /*needs 8 to make room for null byte*/
+	newList(missiles, sizeof(char[MAX_MISSILE_NAME_LEN])); /*needs 8 to make room for null byte*/
 	linesize = sizeof(line);
 	missilefile = fopen(missilefilename, "r");
 
@@ -118,7 +118,7 @@ int processMissileFile(char *missilefilename, linkedlist *missiles, delimiters
 		while(fgets(line, linesize, missilefile) != NULL && result != FAILURE)
 		 /**process line by line**/
 		{
-			for(i = 0; i < 6; i++)
+			for(i = 0; i < MAX_MISSILE_NAME_LEN-1; i++)
 			{
 				line[i] = tolower(line[i]);
 			}
