@@ -173,7 +173,7 @@ static void displayInfo(char **board, hashtable *ships, linkedlist *missiles)
 	}
 
 	/**display missiles left**/
-	printf("\nMissiles left:\t   %d\n", missiles->listlength-1);
+	printf("\nMissiles left:\t   %d\n", missiles->listlength);
 
 	/**display current missile name**/
 	printf("Current missile:   %s\n", (char*)missiles->head->data);
