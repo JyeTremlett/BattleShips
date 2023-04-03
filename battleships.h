@@ -39,7 +39,7 @@ LIBRARY INCLUSIONS*/
 STRUCTS
 delimiters for ending the game
 nmissiles  = number of missiles remaining
-nships	   = number of locations to hit remaining
+nhits	   = number of locations to hit remaining
 turnstaken = number of turns taken
 maxturns   = maximum number of turns possible*/
 typedef struct
@@ -137,7 +137,8 @@ int  simulateTurn(char **board, linkedlist *missiles, delimiters *delims,
 /*cleans up memory
 - implemented in turnsupports.c
 - used in main.c*/
-void cleanUp(char **board, linkedlist *missiles, hashtable *ships);
+void freeBoard(char **board, hashtable *ships);
+
 
 
 #endif

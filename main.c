@@ -107,8 +107,9 @@ int main(int argc, char **argv)
 			{
 				simulateTurn(board, missiles, delims, ships);
 			}
+
 			/*once game has ended, free any allocated memory*/
-			cleanUp(board, missiles, ships);
+			freeBoard(board, ships);
 		}
 
 
@@ -123,7 +124,11 @@ int main(int argc, char **argv)
 		menuchoice = displayMenu();
 	}	
 
-
-		/*EXIT: do nothing*/
-		return result;
-	}
+	/*EXIT: do nothing*/
+	freeList(missiles);
+	free(missiles);
+	freeTable(ships);
+	free(ships);
+	free(delims);
+	return result;
+}

@@ -121,12 +121,17 @@ int addShip(hashtable *table, ship *newship)
 {
 	int i, tablelocation, offset, width, result;
 	char direction;
+	ship *newshiptemp;
 
 	result = SUCCESS;
 	width = table->boardwidth;
 
+	newshiptemp = malloc(sizeof(ship));
+	memcpy(newshiptemp, newship, sizeof(ship));
+
+
 	/**find the offset for the locations**/
-	direction = newship->direction;
+	direction = newshiptemp->direction;
 	if(direction == 'N')		/**if ship points down**/
 	{
 		offset = width;
@@ -145,9 +150,9 @@ int addShip(hashtable *table, ship *newship)
 	}
 
 	/**assign the location of the ship head + i*offset to the hashtable:**/
-	for(i = 0; i < newship->length; i++)
+	for(i = 0; i < newshiptemp->length; i++)
 	{
-		tablelocation = HASH_ALG((int)newship->xlocation-65, newship->ylocation-1, 
+		tablelocation = HASH_ALG((int)newshiptemp->xlocation-65, newshiptemp->ylocation-1, 
 			table->boardwidth);
 
 		/**if the spot is already occupied, FAILURE**/
@@ -159,7 +164,7 @@ int addShip(hashtable *table, ship *newship)
 
 		/**overwrite location with new ship**/
 		free(table->list[tablelocation + i*offset]);
-		table->list[tablelocation + i*offset] = newship;
+		table->list[tablelocation + i*offset] = newshiptemp;
 	}
 	return result;
 }
@@ -213,19 +218,36 @@ void freeTable(hashtable *table)
 {
 	int size, i;
 	size = table->boardheight * table->boardwidth;
+	
 	for(i = 0; i<size; i++)
 	{
 		/*if ship length == 0, free the ship*/
-		if(table->list[i]->length == 0)
-		{
+		if(table->list[i]->length == 0 || table->list[i]->length == 1)
+		{			
 			free(table->list[i]);
 		}
 		/*else, decrement that ship's length*/
 		else
 		{
-			table->list[i]--;
+			table->list[i]->length--;
 		}
 	}
 	free(table->list);
 }
 
+
+/*
+void printAllShips(hashtable *table, int boardsize)
+{
+	int i;
+	for(i = 0; i < boardsize; i++)
+	{
+		printf("%s\n", table->list[i]->name);
+		if((i+1)%5 == 0)
+		{
+			printf("----------------------\n");
+		}
+	}
+	printf("\n\n");
+}
+*/

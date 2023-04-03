@@ -110,19 +110,11 @@ int simulateTurn(char **board, linkedlist *missiles, delimiters *delims,
 	shoot = chooseFunction(missiles);
 	shoot(ships, delims, board, xlocation, ylocation);
 
-	/*if we are successful up until this point, decrement delimiters*/
-	if(result)
-	{
-		delims->nmissiles--;
-		result = increment(missiles);
-		delims->turnstaken++;
-	}
-	else
-	{
-		/*I intended to have shoot return 1 or 0 indicating it's success or 
-		failure but didn't get around to it*/
-		perror("Error shooting missile");
-	}
+	/*decrement delimiters*/
+	delims->nmissiles--;
+	result = increment(missiles);
+	delims->turnstaken++;
+
 	return result;
 }
 

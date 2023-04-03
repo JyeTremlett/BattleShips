@@ -58,6 +58,7 @@ int checkDelimiters(delimiters *delims)
 {
 	int result;
 	result = SUCCESS;
+
 	if(delims->nhits <= 0 && result == SUCCESS)
 	{
 		printf("\n********************************\n");
@@ -122,7 +123,7 @@ RETURNS:
 BEHAVIOUR:
 	
 */
-void cleanUp(char **board, linkedlist *missiles, hashtable *ships)
+void freeBoard(char **board, hashtable *ships)
 {
 	int i;
 	for(i = 0; i < ships->boardwidth; i++)
@@ -130,9 +131,6 @@ void cleanUp(char **board, linkedlist *missiles, hashtable *ships)
 		free(board[i]);
 	}
 	free(board);
-
-	freeList(missiles);
-	freeTable(ships);
 }
 
 

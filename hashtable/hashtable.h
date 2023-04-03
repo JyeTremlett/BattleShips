@@ -97,5 +97,8 @@ ship* getShip(hashtable *table, int xlocation, int ylocation);
 void freeTable(hashtable *table);
 
 
+void printAllShips(hashtable *table, int boardsize);
+
+
 
 #endif

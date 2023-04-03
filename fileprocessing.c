@@ -74,6 +74,7 @@ int processBoardFile(char *boardfilename, hashtable *ships,
 		perror("Error 2 reading from boardfile");
 	}
 	fclose(boardfile);
+
 	return result;
 }
 
@@ -204,6 +205,13 @@ static int processShips (FILE *boardfile, hashtable *ships, delimiters *delims)
 	int nships, result, linesize, nread, ylocation, length, i;
 	char name[MAX_NAME_LENGTH], direction, xlocation, line[BUFSIZ];
 
+	/*initialise delims*/
+	delims->maxturns = 0;
+	delims->turnstaken = 0;
+	delims->nhits = 0;
+	delims->maxturns = 0;
+
+
 	linesize = sizeof(line);
 	shiparr = malloc(sizeof(ship));
 	result = SUCCESS;
@@ -218,6 +226,7 @@ static int processShips (FILE *boardfile, hashtable *ships, delimiters *delims)
 	while(fgets(line, linesize, boardfile) != NULL && result != FAILURE)
 	{
 		nread = sscanf(line, "%c%d %c %d %s", &xlocation, &ylocation, &direction, &length, name);
+
 		if(nread != 5)
 		{
 			result = FAILURE;
@@ -235,21 +244,33 @@ static int processShips (FILE *boardfile, hashtable *ships, delimiters *delims)
 		delims->nhits += length;
 	}
 	delims->maxturns = ships->boardwidth * ships->boardheight;
-	delims->turnstaken = 0;
+
 	/**now save each ship into the hashmap**/
 	if(result != FAILURE)
 	{
 		i = 0;
 		while(i < nships && result != FAILURE)
 		{
-			if(!checkIfValid(&shiparr[i], ships) || !addShip(ships, &shiparr[i]))
+			/*if checking for a valid ship fails, failure*/
+			if(!checkIfValid(&shiparr[i], ships))
 			{
 				result = FAILURE;
+				printf("failure");
 			}
+
+			/*if adding the ship fails, failure*/
+			if(!addShip(ships, &shiparr[i]))
+			{
+				result = FAILURE;
+				printf("failure");
+			}
+
 			i++;
 		}
 	}
 
+	/**free shiparr**/
+	
 	free(shiparr);
 	return result;
 }

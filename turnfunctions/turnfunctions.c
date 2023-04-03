@@ -223,6 +223,10 @@ BEHAVIOUR:
 int checkLocation(char **board, hashtable *ships, int x, int y)
 {
 	int result;
+	/*
+	printf("\n%i, %i, %i, %i, %c\n\n", ships->boardheight, ships->boardwidth, y, x, board[y][x]);
+	*/
+
 	if(y < ships->boardheight 	&&
 		x < ships->boardwidth	&&
 		y >= 0					&&
@@ -284,6 +288,7 @@ BEHAVIOUR:
 static void shootLocation(hashtable *ships, delimiters *delims, char **board, 
 	int x, int y)
 {
+	/*ship *foundship = (ship*)malloc(sizeof(ship));*/
 	ship *foundship;
 	foundship = getShip(ships, x, y);
 
@@ -304,6 +309,7 @@ static void shootLocation(hashtable *ships, delimiters *delims, char **board,
 		printf("\n****** %sMISSED%s ******\n", BLUE, RESET);
 		board[y][x] = MISS;
 	}
+	/*free(foundship);*/
 }
 
 
