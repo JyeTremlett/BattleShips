@@ -101,12 +101,11 @@ void listMissiles(linkedlist *missiles)
 	node *currentmissile;
 	currentmissile = missiles->head;
 	printf("\n\t%s", (char*)currentmissile->data);
-	do
+	while(currentmissile->next != NULL)
 	{
 		currentmissile = currentmissile->next;
 		printf("\t%s", (char*)currentmissile->data);
-
-	} while(currentmissile->next != NULL);
+	}
 	printf("\n");
 }
 
