@@ -66,6 +66,7 @@ int simulateTurn(char **board, linkedlist *missiles, delimiters *delims,
 
 	result = SUCCESS;
 	guessnotvalid = TRUE;
+	ylocation = 100; /*prevents uninitialised value error if user submits invalid guess*/
 
 	displayInfo(board, ships, missiles);
 	printf(".............................................................\n");

@@ -223,11 +223,8 @@ BEHAVIOUR:
 int checkLocation(char **board, hashtable *ships, int x, int y)
 {
 	int result;
-	/*
-	printf("\n%i, %i, %i, %i, %c\n\n", ships->boardheight, ships->boardwidth, y, x, board[y][x]);
-	*/
 
-	if(y < ships->boardheight 	&&
+	if( y < ships->boardheight 	&&
 		x < ships->boardwidth	&&
 		y >= 0					&&
 		x >= 0					&&
