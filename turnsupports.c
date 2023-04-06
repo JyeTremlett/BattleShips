@@ -57,27 +57,30 @@ BEHAVIOUR:
 int checkDelimiters(delimiters *delims)
 {
 	int result;
+	char* separator;
 	result = SUCCESS;
+	
+	separator = "\n**************************************\n";
 
 	if(delims->nhits <= 0 && result == SUCCESS)
 	{
-		printf("\n********************************\n");
-		printf("ALL SHIPS DESTROYED. GAME ENDING\n");
-		printf("********************************\n");
+		printf("%s", separator);
+		printf("ALL SHIPS DESTROYED. GAME ENDING");
+		printf("%s", separator);
 		result = FAILURE;
 	}
 	if(delims->nmissiles <= 0 && result == SUCCESS)
 	{
-		printf("\n********************************\n");
-		printf("GAME ENDING. RAN OUT OF MISSILES\n");
-		printf("********************************\n");
+		printf("%s", separator);
+		printf("GAME ENDING. RAN OUT OF MISSILES");
+		printf("%s", separator);
 		result = FAILURE;
 	}
 	if(delims->turnstaken >= delims->maxturns && result == SUCCESS)
 	{
-		printf("\n**************************************\n");
-		printf("ALL POSSIBLE GUESSES MADE. GAME ENDING\n");
-		printf("**************************************\n");
+		printf("%s", separator);
+		printf("ALL POSSIBLE GUESSES MADE. GAME ENDING");
+		printf("%s", separator);
 		result = FAILURE;
 	}
 	return result;
@@ -100,11 +103,11 @@ void listMissiles(linkedlist *missiles)
 {
 	node *currentmissile;
 	currentmissile = missiles->head;
-	printf("\n\t%s", (char*)currentmissile->data);
+	printf("\n%s", (char*)currentmissile->data);
 	while(currentmissile->next != NULL)
 	{
 		currentmissile = currentmissile->next;
-		printf("\t%s", (char*)currentmissile->data);
+		printf("%s", (char*)currentmissile->data);
 	}
 	printf("\n");
 }
@@ -153,48 +156,51 @@ BEHAVIOUR:
 */
 int displayMenu(void)
 {
-	int input;
+	int selection;
+	char input[3];
+	char* separator;
+
+	/*display menu options*/
+	printf("\nMENU:\nplease select one of the following "
+		"by entering a value\n");
+	printf("Enter 1 to play the game\n"
+		"Enter 2 to list all missiles\n"
+		"Enter 0 to exit\n ");
+
+	/*while no valid input has been given, prompt for input*/
+	do
 	{
-		input = 5;
-		printf("\t\tMENU:\nplease select one of the following "
-			"by entering a value\n");
-		printf("Enter 1 to play the game\n"
-			"Enter 2 to list all missiles\n"
-			"Enter 0 to exit\n ");
+		fgets(input, sizeof(input), stdin);
+	} 
+	while(!strcmp(input, "0\n") && !strcmp(input, "1\n") && !strcmp(input, "2\n"));
+	
+	/*convert selection to integer*/
+	selection = input[0] - '0';
 
-		/*while no valid input has been givien...*/
-		while(input != 0 && input != 1 && input != 2 && input != 3 && input != 4)
-		{
-			scanf(" %d", &input);
-			if(input < 0 || input > 4)
-			{
-				printf("\nINVALID INPUT\n");
-			}
-		}
-	}
-
-	if(input == EXIT)
+	/*take appropriate action for given entry*/
+	separator = "\n**************************************\n";
+	if(selection == EXIT)
 	{
-		printf("\n********************************\n");
-		printf("\tGAME QUIT. EXITING\n");
-		printf("********************************\n");
+		printf("%s", separator);
+		printf("\tGAME QUIT. EXITING");
+		printf("%s", separator);
 	}
-
-	if(input == PLAY_GAME)
+	else if(selection == PLAY_GAME)
 	{
-		printf("\n********************************\n");
-		printf("\tNEW GAME\n");
-		printf("********************************\n");
+		printf("%s", separator);
+		printf("\tNEW GAME");
+		printf("%s", separator);
 	}
-
-	if(input == LIST_MISSILES)
+	else if(selection == LIST_MISSILES)
 	{
-		printf("\n********************************\n");
-		printf("\tLISTING MISSILES\n");
-		printf("********************************\n");
+		printf("%s", separator);
+		printf("\tLISTING MISSILES");
+		printf("%s", separator);
 	}
-
-
-	return input;
+	else
+	{
+		printf("\nINVALID INPUT\nPlease enter either 0, 1, or 2, in order to select from the menu\n\n");
+	}
+	return selection;
 }
 
