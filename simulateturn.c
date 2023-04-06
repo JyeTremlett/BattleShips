@@ -60,7 +60,7 @@ BEHAVIOUR:
 int simulateTurn(char **board, linkedlist *missiles, delimiters *delims, 
 	hashtable *ships)
 {
-	int ylocation, xlocation, result, guessnotvalid;
+	int ylocation, xlocation, result, guessnotvalid, c;
 	char cxlocation;
 	shootFP shoot;
 
@@ -77,6 +77,9 @@ int simulateTurn(char **board, linkedlist *missiles, delimiters *delims,
 		scanf( " %c", &cxlocation);
 		printf("\n");
 		scanf(" %d", &ylocation);
+
+		/*clear out stdin. fflush() does not work in my environment.*/
+		while((c = getchar()) != '\n' && c != EOF);
 
 		/*convert x and y locations to correct integers for board addressing*/
 		cxlocation = toupper(cxlocation);
@@ -173,7 +176,7 @@ static void displayInfo(char **board, hashtable *ships, linkedlist *missiles)
 	}
 
 	/**display missiles left**/
-	printf("\nMissiles left:\t   %d\n", missiles->listlength);
+	printf("\nMissiles left:\t   %d\n", missiles->listlength-1);
 
 	/**display current missile name**/
 	printf("Current missile:   %s\n", (char*)missiles->head->data);
@@ -222,4 +225,3 @@ static void printLocation(char symbol, hashtable *ships, int x, int y)
 		printf(" %s%c%s |", BLUE, symbol, RESET);
 	}
 }
-
