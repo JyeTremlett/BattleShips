@@ -63,17 +63,6 @@ int main(int argc, char **argv)
 
 	result = SUCCESS;
 
-	/*declaration of structs*/
-	delims = 	(delimiters*)malloc(sizeof(delimiters));
-	missiles = 	(linkedlist*)malloc(sizeof(linkedlist));
-	ships = 	(hashtable *)malloc(sizeof(hashtable ));
-	if(delims == NULL || missiles == NULL || ships == NULL)
-	{
-		perror("Error allocating memory for delims, missiles, or ship structs");
-		result = FAILURE;
-	}
-
-
 	if(argc != 3)
 	{
 		perror("Incorrect number of parameters");
@@ -85,18 +74,28 @@ int main(int argc, char **argv)
 	menuchoice = displayMenu();
 	while(menuchoice != EXIT && result == SUCCESS)
 	{
+		/*declaration of structs*/
+		delims = 	(delimiters*)malloc(sizeof(delimiters));
+		missiles = 	(linkedlist*)malloc(sizeof(linkedlist));
+		ships = 	(hashtable *)malloc(sizeof(hashtable ));
+		if(delims == NULL || missiles == NULL || ships == NULL)
+		{
+			perror("Error allocating memory for delims, missiles, or ship structs");
+			result = FAILURE;
+		}
+		
 		/**process board info file**/
 		if(!processBoardFile(argv[1], ships, delims))
 		{
 			result = FAILURE;
 		}
-
+		
 		/*process missile info file*/
 		if(result == SUCCESS && !processMissileFile(argv[2], missiles, delims))
 		{
 			result = FAILURE;
 		}
-
+		
 		/*PLAY: play game and loop over turns*/
 		if(result == SUCCESS && menuchoice == PLAY_GAME)
 		{
@@ -111,8 +110,7 @@ int main(int argc, char **argv)
 			/*once game has ended, free any allocated memory*/
 			freeBoard(board, ships);
 		}
-
-
+		
 		/*LIST: list missiles*/
 		else if(result == SUCCESS && menuchoice == LIST_MISSILES) 
 		{
@@ -120,15 +118,17 @@ int main(int argc, char **argv)
 		}
 
 
+		freeList(missiles);
+		freeTable(ships);
+		free(ships);
+		free(missiles);
+		free(delims);
+
 		/*get next choice of action*/
 		menuchoice = displayMenu();
 	}	
 
 	/*EXIT: do nothing*/
-	freeList(missiles);
-	free(missiles);
-	freeTable(ships);
-	free(ships);
-	free(delims);
+	
 	return result;
 }
