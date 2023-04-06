@@ -56,7 +56,7 @@ CONSTANTS*/
 #define MAX_BOARD_SIZE 12
 #define MIN_BOARD_SIZE 1
 #define MIN_NAME_LEN   1
-#define MAX_MISSILE_NAME_LEN 7
+#define MAX_MISSILE_NAME_LEN 8
 
 #define PLAY_GAME 	   		1
 #define LIST_MISSILES  		2
